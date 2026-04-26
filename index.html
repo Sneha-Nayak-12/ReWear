@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      try {
+        let target = window;
+        let desc = Object.getOwnPropertyDescriptor(target, "fetch");
+        while (!desc && target) {
+          target = Object.getPrototypeOf(target);
+          if (target) desc = Object.getOwnPropertyDescriptor(target, "fetch");
+        }
+        if (desc && !desc.set) {
+          Object.defineProperty(window, "fetch", {
+            configurable: true,
+            enumerable: desc.enumerable,
+            get: desc.get,
+            set: function (v) {
+              /* Ignore React's attempt to overwrite fetch */
+            },
+          });
+        }
+      } catch (e) {}
+    </script>
+    <title>My Google AI Studio App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
